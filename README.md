@@ -81,4 +81,5 @@ Swagger UI is automatically generated from the OpenAPI YAML specification and is
 - Global exception handling
 - Integration tests (MockMvc)
 - API releases and security
+- Docker
 
