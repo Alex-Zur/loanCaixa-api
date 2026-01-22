@@ -40,7 +40,6 @@ class LoanControllerTest {
         assertEquals(StatusEnum.PENDING, response.getBody().getStatus());
     }
 
-
     @Test
     void loanVisualizeGet() {
         List<LoanRequest> loans = List.of(new LoanRequest());
