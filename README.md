@@ -52,9 +52,11 @@ Layered architecture based on Spring MVC, following an API First approach using 
 
 ### Build and run
 
+Maven needs to be installed in the project
+
  - mvn clean install 
  
- - LoanCaixaApiApplication.java -> Run as -> Spring Boot APP 
+ - mvn spring-boot:run
 
 Application available at:
 
@@ -63,7 +65,7 @@ Application available at:
 If you want to use it in Postman or something similar
 
  - src/test/resources/loanCaixa-api.postman_collection.json
-
+ 
 
 ## API Documentation
 
