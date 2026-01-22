@@ -1,0 +1,132 @@
+openapi: 3.0.1
+info:
+  title: Loan API
+  description: REST API for managing loan applications
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /loan/create:
+    post:
+      summary: Create loan application
+      parameters:
+        - name: documentId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: applicantName
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: amount
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: currency
+          in: query
+          required: true
+          schema:
+            type: string            
+      responses:
+        '200':
+          description: Solicitud creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanRequest'
+                
+  /loan/visualize:
+    get:
+      summary: Visualize loan requests by filter
+      parameters:
+        - name: applicantName
+          in: query
+          schema:
+            type: string
+        - name: documentId
+          in: query
+          schema:
+            type: string       
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED, CANCELLED]
+        - name: minAmount
+          in: query
+          schema:
+            type: number
+            format: double
+        - name: maxAmount
+          in: query
+          schema:
+            type: number
+            format: double
+      responses:
+        '200':
+          description: List of applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoanRequest'
+
+
+  /loan/{id}/status:
+    patch:
+      summary: Change the status of a request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED, CANCELLED]
+      responses:
+        '200':
+          description: Updated status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanRequest'
+
+components:
+  schemas:
+    LoanRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        applicantName:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        documentId:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - PENDING
+            - APPROVED
+            - REJECTED
+            - CANCELLED
